@@ -23,7 +23,7 @@ Tujuan utama dari pengembangan aplikasi **UangKu** adalah:
 *  Pencatatan transaksi pemasukan
 *  Pencatatan transaksi pengeluaran
 *  Penyimpanan tanggal dan waktu transaksi
-*  Edit dan 🗑️ hapus transaksi
+*  Edit dan hapus transaksi
 *  Perhitungan saldo otomatis
 *  Sinkronisasi data real-time dengan Firebase Firestore
 *  Antarmuka sederhana dan responsif
