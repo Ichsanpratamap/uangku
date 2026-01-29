@@ -52,10 +52,6 @@ Dengan adanya aplikasi **UangKu**, diharapkan pengguna dapat lebih mudah dalam m
  * **Kelas:** TIF RM 23 B
  ---
 
-# uangku
-
-A new Flutter project.
-
 ## Getting Started
 
 This project is a starting point for a Flutter application.
