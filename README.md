@@ -41,6 +41,11 @@ Tujuan utama dari pengembangan aplikasi **UangKu** adalah:
 
 ---
 
+## Link Video Demo: 
+https://youtu.be/fHB8WGLusGI
+
+---
+
 ##  Penutup
 
 Dengan adanya aplikasi **UangKu**, diharapkan pengguna dapat lebih mudah dalam mengelola keuangan pribadi secara digital. Aplikasi ini juga menjadi sarana penerapan teori pemrograman mobile, arsitektur aplikasi, serta integrasi layanan cloud dalam pengembangan aplikasi modern.
