@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # UI & Material
+  # UI
   cupertino_icons: ^1.0.6
 
   # State Management
@@ -35,4 +35,3 @@ flutter:
 
   assets:
     - assets/images/
-

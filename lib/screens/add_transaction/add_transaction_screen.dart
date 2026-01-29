@@ -3,28 +3,62 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../models/transaction_model.dart';
 import '../../providers/transaction_provider.dart';
 
-class AddTransactionScreen extends ConsumerWidget {
-  const AddTransactionScreen({super.key});
+class AddTransactionScreen extends ConsumerStatefulWidget {
+  final TransactionModel? transaction;
+
+  const AddTransactionScreen({super.key, this.transaction});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final amountController = TextEditingController();
-    final noteController = TextEditingController();
-    String type = 'income';
+  ConsumerState<AddTransactionScreen> createState() =>
+      _AddTransactionScreenState();
+}
 
+class _AddTransactionScreenState
+    extends ConsumerState<AddTransactionScreen> {
+  late TextEditingController amountController;
+  late TextEditingController noteController;
+  late String type;
+
+  @override
+  void initState() {
+    super.initState();
+
+    amountController = TextEditingController(
+      text: widget.transaction?.amount.toString() ?? '',
+    );
+
+    noteController = TextEditingController(
+      text: widget.transaction?.note ?? '',
+    );
+
+    type = widget.transaction?.type ?? 'income';
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Tambah Transaksi')),
+      appBar: AppBar(
+        title: Text(widget.transaction == null
+            ? 'Tambah Transaksi'
+            : 'Edit Transaksi'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            DropdownButtonFormField(
+            DropdownButtonFormField<String>(
               value: type,
               items: const [
-                DropdownMenuItem(value: 'income', child: Text('Pemasukan')),
-                DropdownMenuItem(value: 'expense', child: Text('Pengeluaran')),
+                DropdownMenuItem(
+                    value: 'income', child: Text('Pemasukan')),
+                DropdownMenuItem(
+                    value: 'expense', child: Text('Pengeluaran')),
               ],
-              onChanged: (value) => type = value!,
+              onChanged: (value) {
+                setState(() {
+                  type = value!;
+                });
+              },
             ),
             TextField(
               controller: amountController,
@@ -38,22 +72,43 @@ class AddTransactionScreen extends ConsumerWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
+                if (amountController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        content: Text('Nominal wajib diisi')),
+                  );
+                  return;
+                }
+
                 final transaction = TransactionModel(
-                  id: '',
+                  id: widget.transaction?.id ?? '',
                   type: type,
                   amount: int.parse(amountController.text),
                   category: '-',
                   note: noteController.text,
-                  date: DateTime.now(),
+                  date:
+                      widget.transaction?.date ?? DateTime.now(),
                 );
 
-                await ref
-                    .read(firestoreProvider)
-                    .addTransaction(transaction);
+                if (widget.transaction == null) {
+                  await ref
+                      .read(firestoreProvider)
+                      .addTransaction(transaction);
+                } else {
+                  await ref
+                      .read(firestoreProvider)
+                      .updateTransaction(transaction);
+                }
 
-                Navigator.pop(context);
+                if (!context.mounted) return;
+                ScaffoldMessenger.of(context).showSnackBar(
+
+                const SnackBar(content: Text('Transaksi berhasil disimpan')),
+              );
+                Navigator.popUntil(context, (route) => route.isFirst );
               },
-              child: const Text('Simpan'),
+              child: Text(
+                  widget.transaction == null ? 'Simpan' : 'Update'),
             ),
           ],
         ),

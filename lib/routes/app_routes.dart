@@ -8,3 +8,4 @@ class AppRoutes {
     '/home': (context) => const HomeScreen(),
   };
 }
+
