@@ -48,8 +48,8 @@ Dengan adanya aplikasi **UangKu**, diharapkan pengguna dapat lebih mudah dalam m
 ---
 
  **Nama:** Ichsan Pratama Putra
- **NPM:** 23552011205
- **Kelas:** TIF RM 23 B
+ * **NPM:** 23552011205
+ * **Kelas:** TIF RM 23 B
  ---
 
 # uangku
